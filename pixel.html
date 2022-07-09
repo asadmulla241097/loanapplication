@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title></title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css" integrity="sha512-3icgkoIO5qm2D4bGSUkPqeQ96LS8+ukJC7Eqhl1H5B2OJMEnFqLmNDxXVmtV/eq5M65tTDkUYS/Q0P4gvZv+yA==" crossorigin="anonymous" /> 
+		<link rel="stylesheet" type=text/css href="sty.css">
+	
+	<body>
+	<div class="container">
+		<div class="header">
+			<h2>LOAN APPLICATION FORM</h2>
+		</div>
+		<form class="form" id="form">
+			<div class="form-control">
+				<label>Username</label>
+				<input type="text" name="" id="username" placeholder="Enter your fullname" autocomplete="off">
+				<i class="fas fa-check-circle"></i>
+				<i class="fas fa-exclamation"> </i>
+				<small>Error msg</small>
+			</div>
+			<div class="form-control">
+				<label>Email</label>
+				<input type="Email" name="" id="email" placeholder="Enter your email" autocomplete="off">
+				<i class="fas fa-check-circle"></i>
+				<i class="fas fa-exclamation"> </i>
+				<small>Error msg</small>
+			</div>
+			
+			<div class="form-control">
+				<label>Pancard</label>
+				<input type="text" name="" id="pancard" placeholder="Enter your pancard number" autocomplete="off" maxlength="10" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" title="please enter a valid Pancard number eg-AAAAA9999A">
+				<i class="fas fa-check-circle"></i>
+				<i class="fas fa-exclamation"></i>
+				<small>Error msg</small>
+			</div>
+			
+			<div class="form-control">
+				<label>Captcha</label>
+				<input type="text" name="" id="captcha" placeholder="Enter captcha" autocomplete="off"  >
+				</div>
+			<div class="form-control">
+		
+				<input type="text" id="textinput">
+				<i class="fas fa-check-circle"></i>
+				<i class="fas fa-exclamation"> </i>
+				<small>Error msg</small>
+			</div>
+				
+			
+			
+			<button onclick="validcap()"
+			<input type="submit" value="Submit" class="btn" name="">submit
+			</button>
+			
+			<h6>Captcha Refresh <img src="refresh.jpg" width="40px" onclick="cap()"></h6>
+			
+		</form>
+		
+		</div>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+	
+			
+			 const form= document.getElementById('form');
+			 const username = document.getElementById('username');
+			 const email = document.getElementById('email');
+			 const pancard = document.getElementById('pancard');
+			 
+			 
+			 form.addEventListener('submit',(event) => { 				
+				event.preventDefault();
+				validate();
+			 })
+			 
+			 
+			 const sendData=(usernameVal,sRate,count) => {
+			 
+				if (sRate===count){
+					alert('registered successfully');
+					swal("Welcome!"+ usernameVal,"REGISTRATION SUCCESSFUL","success");
+					
+				
+				}
+			 
+			 }
+			 
+			 const successMsg = (usernameVal) => {
+			 
+				let formCon =document.getElementsByClassName('form-control');
+				var count = formCon.length-1;
+				for(var i=0;i<formCon.length;i++){
+					if (formCon[i].className ==="form-control success"){
+						var sRate =0+i;
+						console.log(sRate);
+						sendData(usernameVal,sRate,count);
+					
+					
+					} else {
+					
+						return false;
+					}
+				
+				
+				
+				
+				}
+			  }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+		function cap(){
+			var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+					'1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+					'w','x','y','z','!','@','#','$','%','^','&','*','+'];
+					
+			var a =alpha[Math.floor(Math.random()*71)];
+			var b =alpha[Math.floor(Math.random()*71)];
+			var c =alpha[Math.floor(Math.random()*71)];
+			var d =alpha[Math.floor(Math.random()*71)];
+			var e =alpha[Math.floor(Math.random()*71)];
+			var f =alpha[Math.floor(Math.random()*71)];
+			
+			var final= a+b+c+d+e+f;
+			document.getElementById("captcha").value=final;
+	
+			function validcap(){
+			
+			var stg1= document.getElementById("captcha").value;
+			var stg2=document.getElementById("textinput").value;
+			if (stg1==stg2){
+				document.getElementById('success').innerHtml="form is validated successfully";
+				return true;
+			}
+			else{
+				document.getElementById('error').innerHtml="please enter valid captcha";
+				return false;
+			}
+			}
+			
+			
+		
+			}
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 const isEmail= (emailVal) => {
+				var atSymbol = emailVal.indexOf("@");
+				if(atSymbol <1 
+				) return false;
+				var dot = emailVal.lastIndexOf('.');
+				if(dot <= atSymbol+2) return false;
+				if (dot === emailVal.length -1) return false;
+				return true;
+				
+			 }
+			 
+			 const validate = () => {
+			 
+			 const usernameVal=username.value.trim();
+			 const emailVal=email.value.trim();
+			 const pancardVal=pancard.value.trim();
+			 const captchaVal=captcha.value.trim();
+			 
+			 
+			 
+			 if(usernameVal === ""){
+				setErrormsg(username,'username cannot be blank');
+			 
+			 
+				
+			 } else if (usernameVal.length <= 2){
+				setErrormsg(username,'username min 3 char');
+			 } else {
+				setSuccessMsg(username);
+			 }
+			 
+			 
+			 
+			  if(emailVal === ""){
+				setErrormsg(email,'email cannot be blank');
+			 	
+			 } else if (!isEmail(emailVal)){
+				setErrormsg(email,'not a valid mail');
+			 } else {
+				setSuccessMsg(email);
+			 }
+			 
+			 
+			 if(pancardVal ==""){
+			  setErrormsg(pancard,'pancard number cannot be blank');
+			  }
+			  else{
+			   setSuccessMsg(pancard);
+			  }
+			 
+			
+			 if (captchaVal==""){
+				setErrormsg(textinput,"captcha cannot be blank");
+				}
+			
+			 else {
+			 
+				setSuccessMsg(captcha);
+				setSuccessMsg(textinput);
+			 }
+			 
+			 
+			 successMsg(usernameVal);
+			 
+		
+			 
+			 
+			 
+			 
+			 
+			 
+		
+
+			
+
+			 
+			 
+
+			 
+			 }
+
+			
+			
+		
+			 
+			 function setErrormsg(input,errormsgs){
+				const formControl = input.parentElement;
+				const small = formControl.querySelector('small');
+				formControl.className="form-control error";
+				small.innerText =errormsgs;
+			 
+			 
+			 
+			 
+			 
+			 }
+			 
+			 function setSuccessMsg(input){
+			 
+				const formControl = input.parentElement;
+				formControl.className = "form-control success";
+			 
+			 
+			 
+			 }
+			 
+			 
+			 
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	 </script>
+	</body>
+</html>
+	
+	
+			
+		
